@@ -21,7 +21,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _passwordVisible = false;
   bool _confirmPasswordVisible = false;
 
-  String gender = 'Male'; // Default value for the dropdown
+  String? gender; // Gender is now nullable to prompt user to select
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +96,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your full name';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        "Gender",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(height: 5),
+                      DropdownButtonFormField<String>(
+                        value: gender,
+                        hint: const Text("Select"),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          prefixIcon: Icon(Icons.accessibility_new),
+                        ),
+                        items: <String>['Male', 'Female']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            gender = newValue;
+                          });
+                        },
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Please select your gender';
                           }
                           return null;
                         },
@@ -287,7 +322,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         Uri.parse("${MyConfig.servername}/memberlink/api/register_user.php"),
         body: {
           "full_name": fullName,
-          "gender": gender,
+          "gender": gender ?? '',
           "email": email,
           "phone": phone,
           "password": password,

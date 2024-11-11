@@ -1,3 +1,13 @@
+
+build/
+.dart_tool/
+.idea/
+.packages
+*.iml
+.flutter-plugins
+.flutter-plugins-dependencies
+android/.gradle   
+
 # Miscellaneous
 *.class
 *.log
@@ -41,3 +51,5 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+ 33e09b5 (Update registration form to include gender dropdown)
